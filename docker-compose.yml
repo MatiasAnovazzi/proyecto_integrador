@@ -15,15 +15,20 @@ services:
       - mysql_data:/var/lib/mysql
 
   app:
-    build: .
+    # Si tienes el Dockerfile dentro de la carpeta 'app', usa build: ./app
+    # Si el Dockerfile está en la raíz del proyecto (junto a docker-compose.yml), usa build: .
+    # Basado en tu árbol de directorios, parece que Dockerfile está dentro de 'app'.
+    build: ./app # <-- Asegúrate de que esto es correcto según la ubicación real de tu Dockerfile
     depends_on:
       - db
     ports:
       - "8000:8000"
     environment:
       - DATABASE_URL=mysql+pymysql://myuser:mypass@db:3306/mydb
+      - PYTHONPATH=/app # <--- ¡Esta línea es crucial!
     volumes:
-      - ./app:/app
+      - ./app:/app # <--- Asegúrate de que esto monte correctamente tu carpeta 'app' local en /app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload # <--- Este comando es para FastAPI
 
 volumes:
   mysql_data:

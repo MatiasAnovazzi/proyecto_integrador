@@ -1,0 +1,16 @@
+# app/Dockerfile
+FROM python:3.10.12-slim
+
+WORKDIR /app # El directorio de trabajo dentro del contenedor es /app
+
+# Copia solo los requirements primero para aprovechar el cache de Docker
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copia todo el contenido de la carpeta 'app' del host (que ahora es el build context)
+# al WORKDIR /app dentro del contenedor.
+COPY . . 
+
+# Comando para ejecutar la aplicación. Como main.py está directamente en /app,
+# el comando es 'main:app'.
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
