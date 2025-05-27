@@ -13,22 +13,26 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck: # Añade esta sección
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u$${MYSQL_USER}", "-p$${MYSQL_PASSWORD}"]
+      interval: 10s # Comprueba cada 10 segundos
+      timeout: 5s   # Espera 5 segundos por una respuesta
+      retries: 10   # Intenta 10 veces antes de marcar como no saludable
+      start_period: 30s # Espera 30 segundos después de iniciar el contenedor antes de la primera comprobación
 
   app:
-    # Si tienes el Dockerfile dentro de la carpeta 'app', usa build: ./app
-    # Si el Dockerfile está en la raíz del proyecto (junto a docker-compose.yml), usa build: .
-    # Basado en tu árbol de directorios, parece que Dockerfile está dentro de 'app'.
-    build: ./app # <-- Asegúrate de que esto es correcto según la ubicación real de tu Dockerfile
+    build: ./app
     depends_on:
-      - db
+      db: # Modifica esta sección
+        condition: service_healthy # Espera a que el healthcheck de 'db' pase
     ports:
       - "8000:8000"
     environment:
       - DATABASE_URL=mysql+pymysql://myuser:mypass@db:3306/mydb
-      - PYTHONPATH=/app # <--- ¡Esta línea es crucial!
+      - PYTHONPATH=/app
     volumes:
-      - ./app:/app # <--- Asegúrate de que esto monte correctamente tu carpeta 'app' local en /app
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload # <--- Este comando es para FastAPI
+      - ./app:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   mysql_data:
