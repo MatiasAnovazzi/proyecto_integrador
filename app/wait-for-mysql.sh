@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 echo "Esperando a que MySQL esté listo..."
 
 until mysqladmin ping -h db -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --silent; do
