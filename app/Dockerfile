@@ -5,6 +5,8 @@ WORKDIR /app # El directorio de trabajo dentro del contenedor es /app
 
 # Copia solo los requirements primero para aprovechar el cache de Docker
 COPY requirements.txt .
+RUN apt-get update && apt-get install -y default-mysql-client
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia todo el contenido de la carpeta 'app' del host (que ahora es el build context)
