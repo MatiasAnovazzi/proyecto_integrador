@@ -6,8 +6,6 @@ Este repositorio contiene el desarrollo de un proyecto integrador que busca cons
 
 - **app/**: Carpeta principal que contiene el código fuente de la aplicación.
 - **docker-compose.yml**: Archivo de configuración para Docker Compose, facilitando la orquestación de contenedores necesarios para la aplicación.
-- **ejercicio.js**: Archivo JavaScript que posiblemente contiene scripts o ejercicios relacionados con el proyecto.
-- **estadistica.txt**: Archivo de texto que puede contener datos estadísticos o información relevante para el análisis del proyecto.
 
 ## Tecnologías Utilizadas
 
