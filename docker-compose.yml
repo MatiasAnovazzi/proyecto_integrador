@@ -15,7 +15,7 @@ services:
       - mysql_data:/var/lib/mysql
     healthcheck:
       # --- SECCIÓN CORREGIDA ---
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "myuser", "-pmypass"]
       interval: 10s
       timeout: 5s
       retries: 10

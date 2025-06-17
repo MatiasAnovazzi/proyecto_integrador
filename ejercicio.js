@@ -1,4 +1,4 @@
-fetch('http://localhost:8000/clientes', {
+fetch('http://localhost:8000/usuarios/clientes', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -18,6 +18,7 @@ fetch('http://localhost:8000/clientes', {
 .catch(error => {
     console.error('Error:', error);
 });
+
 
 
 fetch('http://localhost:8000/usuarios/clientes', {
