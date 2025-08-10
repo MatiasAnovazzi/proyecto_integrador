@@ -13,6 +13,10 @@ def get_db():
         yield db
     finally:
         db.close()
+@router.get("/", response_model=list[schemas.TurnoOut])
+def listar_turnos_por_profesional(id_profesional: int, db: Session = Depends(get_db)):
+    turnos = db.query(models.Turno).filter(models.Turno.id_profesional == id_profesional).all()
+    return turnos
 
 @router.post("/", response_model=schemas.TurnoOut)
 def crear_turno(turno: schemas.TurnoCreate, db: Session = Depends(get_db)):

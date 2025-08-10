@@ -10,6 +10,5 @@ RUN apt-get update && apt-get install -y default-mysql-client
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . . 
-RUN chmod +x wait-for-mysql.sh
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
