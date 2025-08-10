@@ -25,10 +25,13 @@ class Usuario(Base):
 class Turno(Base):
     __tablename__ = "turnos"
 
-    id = Column(Integer, primary_key=True, index=True)
-    cliente_id = Column(Integer, ForeignKey("usuarios.id"))
-    profesional_id = Column(Integer, ForeignKey("usuarios.id"))
-    horario = Column(DateTime, nullable=False)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    titulo = Column(String, nullable=False)
+    hora_inicio = Column(DateTime, nullable=False)
+    hora_fin = Column(DateTime, nullable=False)
+    id_profesional = Column(Integer, ForeignKey("profesionales.id"), nullable=False)
+    descripcion = Column(String)
+    id_cliente = Column(Integer, ForeignKey("clientes.id"), nullable=False)
 
-    cliente = relationship("Usuario", foreign_keys=[cliente_id], back_populates="turnos_cliente")
-    profesional = relationship("Usuario", foreign_keys=[profesional_id], back_populates="turnos_profesional")
+    profesional = relationship("Profesional", back_populates="turnos")
+    cliente = relationship("Cliente", back_populates="turnos")

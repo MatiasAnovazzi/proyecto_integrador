@@ -29,15 +29,17 @@ class UsuarioOut(UsuarioBase):
         orm_mode = True
 
 class TurnoBase(BaseModel):
-    cliente_id: int
-    profesional_id: int
-    horario: datetime.datetime
+    titulo: str
+    hra_oinicio: datetime
+    hora_fin: datetime
+    id_profesional: int
+    descripcion: str | None = None
+    id_cliente: int
 
 class TurnoCreate(TurnoBase):
     pass
 
 class TurnoOut(TurnoBase):
     id: int
-
     class Config:
         orm_mode = True
