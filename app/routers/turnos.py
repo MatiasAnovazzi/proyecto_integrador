@@ -17,11 +17,11 @@ def get_db():
 @router.post("/", response_model=schemas.TurnoOut)
 def crear_turno(turno: schemas.TurnoCreate, db: Session = Depends(get_db)):
     # Validar que el cliente y el profesional existan
-    cliente = db.query(models.Usuario).filter(models.Usuario.id == turno.cliente_id, models.Usuario.tipo_usuario == models.TipoUsuarioEnum.cliente).first()
+    cliente = db.query(models.Usuario).filter(models.Usuario.id == turno.id_cliente, models.Usuario.tipo_usuario == models.TipoUsuarioEnum.cliente).first()
     if not cliente:
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
 
-    profesional = db.query(models.Usuario).filter(models.Usuario.id == turno.profesional_id, models.Usuario.tipo_usuario == models.TipoUsuarioEnum.profesional).first()
+    profesional = db.query(models.Usuario).filter(models.Usuario.id == turno.id_profesional, models.Usuario.tipo_usuario == models.TipoUsuarioEnum.profesional).first()
     if not profesional:
         raise HTTPException(status_code=404, detail="Profesional no encontrado")
 

@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from enum import Enum
 from typing import Optional
-import datetime
+from datetime import datetime
 
 class TipoUsuarioEnum(str, Enum):
     cliente = "cliente"
@@ -25,21 +25,31 @@ class UsuarioOut(UsuarioBase):
     edad: Optional[int]
     especialidad: Optional[str]
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True,
+        "arbitrary_types_allowed": True,
+    }
 
 class TurnoBase(BaseModel):
     titulo: str
-    hra_oinicio: datetime
+    hora_inicio: datetime
     hora_fin: datetime
     id_profesional: int
-    descripcion: str | None = None
+    descripcion: Optional[str] = None
     id_cliente: int
+
+    model_config = {
+        "from_attributes": True,
+        "arbitrary_types_allowed": True,
+    }
 
 class TurnoCreate(TurnoBase):
     pass
 
 class TurnoOut(TurnoBase):
     id: int
-    class Config:
-        orm_mode = True
+
+    model_config = {
+        "from_attributes": True,
+        "arbitrary_types_allowed": True,
+    }
